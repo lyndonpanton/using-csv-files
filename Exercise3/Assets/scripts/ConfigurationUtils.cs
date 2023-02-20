@@ -8,6 +8,7 @@ using UnityEngine;
 public static class ConfigurationUtils
 {
     static ConfigurationData configurationData;
+
     /// <summary>
     /// Gets the teddy bear move units per second
     /// </summary>
