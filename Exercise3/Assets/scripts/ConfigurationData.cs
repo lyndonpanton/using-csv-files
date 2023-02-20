@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -50,6 +52,28 @@ public class ConfigurationData
     public ConfigurationData()
     {
         // read and save configuration data from file
+        StreamReader input = null;
+
+        try
+        {
+            input = File.OpenText(Path.Combine(
+                Application.streamingAssetsPath, ConfigurationDataFileName)
+            );
+
+            string names = input.ReadLine();
+            string values = input.ReadLine();
+
+            SetConfigurationDataFields(values);
+        } catch (Exception e)
+        {
+
+        } finally
+        {
+            if (input != null)
+            {
+                input.Close();
+            }
+        }
 
     }
 
@@ -61,7 +85,13 @@ public class ConfigurationData
     /// <param name="csvValues">csv string of values</param>
     static void SetConfigurationDataFields(string csvValues)
     {
+        string[] values = csvValues.Split(',');
 
+        // driver characteristics
+        teddyBearMoveUnitsPerSecond = float.Parse(values[0]);
+
+        // shooter characteristics
+        cooldownSeconds = float.Parse(values[1]);
     }
 
     #endregion
